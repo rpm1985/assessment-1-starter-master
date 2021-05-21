@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div id=missingSponsorMessage th:if="${sponsor ==  null }">
+    <div>No matching sponsor</div>
+</div>
+
+<main role="main" class="container mt-4">
+    <div class="starter-template">
+        <div id=sponsorInfo th:if="${sponsor}">
+
+            <div class="row mt-4">
+                <div class="col-sm">
+<!--                    <img th:attr="src=@{'/images/'+${charity.logoPath}+'.png'}"/>-->
+                </div>
+                <div class="col-md">
+                    <H3 th:text="${sponsor.fundraiserName}">
+
+                    </H3>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg border border-primary">
+                    <div th:text="${sponsor.fundraisingAction}"></div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg">
+                    <a class="btn btn-primary btn-lg btn-block" th:id="@{donateLink{id} (id=${sponsor.furl})}"
+                       th:href="@{/donate/{id} (id=${sponsor.furl})}">
+                            <span>Sponsor</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <!--THis is where the code goes for the top five doantions-->
+        </div>
+    </main>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<main role="main" class="container mt-4">
+    <div class="starter-template">
+
+        <div class="row  mt-4">
+
+            <div class="col-md">
+                <div id=paymentConfirmation>
+
+                    <h3>Thank you</h3>
+                    <div th:text="${donor.name}"></div>
+
+                </div>
+            </div>
+            <div class="col-md">
+                <h3>
+                    You are about to sponsor:
+                </h3>
+                <span th:text="'£'+ ${#numbers.formatDecimal(donor.donationAmount,1,2)}"></span>
+                <div>
+                    <div id="charityDetails" class="mt-4">
+                        <!-- Inject Charity Details here-->
+                    </div>
+
+                    <h3>Using card:</h3>
+                    <div th:text="'**** **** ****'+${last4Card}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+
+                <a id="confirm" href="confirm"
+                   class="btn btn-primary btn-lg"
+                   role="button">
+                    Confirm
+                </a>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+<div th:replace="fragments/footer :: footer">
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="/js/dustjs-2.7.2/dist/dust-full.js"></script>
+<script src="/js/js-url-2.5.3/url.js"></script>
+<script src="/js/app/charity.js"></script>
+
+<script th:inline="javascript">
+
+    var id = [[${id}]];
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    var template =
+        "<img src=\"/images/{logoPath}.png\"/>" +
+        "<div>{name}" +
+        "</div>";
+
+
+    // Compile the template under the name 'hello'
+    var compiled = dust.compile(template, 'charityInfo');
+    // Register the template with Dust
+    dust.loadSource(compiled);
+    $(document).ready(function () {
+        injectCharity(id);
+    });
+
+</script>
+
+
+</body>
+</html>

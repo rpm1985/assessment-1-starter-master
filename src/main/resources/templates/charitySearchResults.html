@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: head"></head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div id=missingCharityMessage th:if="${#lists.isEmpty(matches)}">
+    <div>No matching charity</div>
+</div>
+
+<main role="main" class="container">
+    <div class="starter-template">
+        <div class="row">
+
+            <h2>Matches for &quot;<span th:text="${searchTerm}"></span>&quot;</h2>
+        </div>
+
+        <div class="row">
+            <div id=charityListContainer th:if="${not #lists.isEmpty(matches)}">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Registration Number</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="charity : ${matches}">
+                        <th scope="row">
+                            <a th:id="@{charityLink{id} (id=${charity.id})}"
+                               th:href="@{/charity/{id} (id=${charity.id})}">
+                                <span th:text="${charity.name}"></span>
+                            </a>
+                        </th>
+                        <td th:text="${charity.registrationNumber}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="starter-template">
+
+            <div class= "row" id = "topDonations">
+                <form action="/topDonation" method="get" class="form-inline my-2 my-lg-0">
+                    <p class="mr-sm-2">For top 5 donations</p>
+                </form>
+                <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#modalDonations" data-id="DonationsButton">Click Here</button>
+                <div id="modalDonations" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Some text in the modal.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<div th:replace="fragments/footer :: footer"/>
+
+
+</body>
+</html>
